@@ -1,6 +1,13 @@
-# My Neovim Configuration
+# scnvim - Simple Configuration for Neovim
 
-Personal Neovim setup based on kickstart.nvim with custom plugins and keymappings.
+**scnvim** is a simple, practical Neovim configuration based on [kickstart-modular.nvim](https://github.com/dam9000/kickstart-modular.nvim). It includes tweaks and customizations specifically tailored for data science and system administration workflows.
+
+## About
+
+This configuration builds upon the excellent foundation provided by kickstart-modular.nvim, adding enhanced features for:
+- **Data Science**: TMUX integration for REPL workflows, efficient code execution
+- **System Administration**: Enhanced navigation, file management, and terminal integration
+- **General Development**: Streamlined keybindings and modern plugin ecosystem
 
 ## Quick Start
 
