@@ -1,0 +1,143 @@
+---
+title: "R Data Analysis Example"
+author: "Your Name"
+date: today
+format: 
+  html:
+    code-fold: true
+    toc: true
+execute:
+  echo: true
+  warning: false
+---
+
+# Introduction
+
+This is a sample Quarto document demonstrating R data analysis capabilities in Neovim.
+
+## Loading Libraries
+
+```{r}
+#| label: setup
+#| message: false
+
+# Load common R packages for data analysis
+library(tidyverse)
+library(ggplot2)
+```
+
+## Data Analysis Example
+
+Let's create some sample data and perform basic analysis:
+
+```{r}
+#| label: create-data
+# Create sample dataset
+set.seed(123)
+data <- tibble(
+  x = rnorm(100, mean = 50, sd = 10),
+  y = 2 * x + rnorm(100, mean = 0, sd = 5),
+  group = sample(c("A", "B", "C"), 100, replace = TRUE)
+)
+
+# Display first few rows
+head(data)
+```
+
+## Data Visualization
+
+Now let's create a scatter plot with a regression line:
+
+```{r}
+#| label: fig-scatter
+#| fig-cap: "Scatter plot with regression line"
+#| fig-width: 8
+#| fig-height: 6
+
+ggplot(data, aes(x = x, y = y, color = group)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.2) +
+  theme_minimal() +
+  labs(
+    title = "Relationship between X and Y",
+    x = "X Variable",
+    y = "Y Variable",
+    color = "Group"
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    legend.position = "bottom"
+  )
+```
+
+## Statistical Summary
+
+Let's compute some basic statistics:
+
+```{r}
+#| label: statistics
+# Summary statistics by group
+summary_stats <- data %>%
+  group_by(group) %>%
+  summarise(
+    mean_x = mean(x),
+    mean_y = mean(y),
+    cor_xy = cor(x, y),
+    n = n()
+  )
+
+print(summary_stats)
+```
+
+## Linear Model
+
+Finally, let's fit a linear model:
+
+```{r}
+#| label: linear-model
+# Fit linear model
+model <- lm(y ~ x + group, data = data)
+
+# Display model summary
+summary(model)
+```
+
+```{r}
+
+str(data)
+
+```
+## Conclusion
+
+This document demonstrates how to:
+
+1. Load and manipulate data with tidyverse
+2. Create visualizations with ggplot2
+3. Compute summary statistics
+4. Fit statistical models
+
+## Key Bindings Quick Reference
+
+When editing this file in Neovim with quarto-nvim:
+
+- **Code Execution (with vim-slime)**:
+  - `,rc` - Run current code cell
+  - `,ra` - Run cell and all above
+  - `,rA` - Run all cells
+  - `,rl` - Run current line
+  - `,m` + motion - Send any motion to TMUX (e.g., `,m5j` sends 5 lines)
+
+- **Quarto Operations**:
+  - `<space>qp` - Preview document
+  - `<space>qr` - Render document
+  - `<space>qq` - Close preview
+
+- **Navigation**:
+  - `,]` - Jump to next code chunk
+  - `,[` - Jump to previous code chunk
+  - `gn` - Go to next code chunk (alternative)
+  - `gp` - Go to previous code chunk (alternative)
+
+- **Insert Code Chunks**:
+  - `,ci` - Insert R code chunk
+  - `,cp` - Insert Python code chunk

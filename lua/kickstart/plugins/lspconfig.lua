@@ -235,6 +235,30 @@ return {
             },
           },
         },
+
+        -- R Language Server
+        r_language_server = {
+          settings = {
+            r = {
+              lsp = {
+                diagnostics = true,
+                rich_documentation = true,
+              },
+            },
+          },
+        },
+
+        -- Python language server (useful for Quarto documents with Python)
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = 'basic',
+                autoImportCompletions = true,
+              },
+            },
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
