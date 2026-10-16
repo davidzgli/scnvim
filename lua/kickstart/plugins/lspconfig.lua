@@ -275,11 +275,10 @@ return {
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
-      -- Biowulf (Lmod): Mason's r-languageserver rebuilds ~50 R packages from source and
-      -- fails when R isn't loaded, so install it in R instead: install.packages('languageserver')
-      if vim.fn.isdirectory '/usr/local/lmod' == 1 then
-        ensure_installed = vim.tbl_filter(function(name) return name ~= 'r_language_server' end, ensure_installed)
-      end
+      -- Don't let Mason install r-languageserver: it builds ~50 R packages into a private
+      -- library that breaks on R upgrades (e.g. 4.5 -> 4.6) and fails when R isn't on PATH.
+      -- Install it in R instead (once per R version): install.packages('languageserver')
+      ensure_installed = vim.tbl_filter(function(name) return name ~= 'r_language_server' end, ensure_installed)
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
       })
