@@ -250,6 +250,14 @@ return {
 
         -- Python language server (useful for Quarto documents with Python)
         pyright = {
+          -- pyright runs on Node.js; if node isn't on PATH, start it through a login
+          -- shell with `module load nodejs` (Lmod on Biowulf, Environment Modules on BBC)
+          cmd = vim.fn.executable 'node' == 0 and {
+            'bash',
+            '-lc',
+            'module load nodejs >/dev/null 2>&1; exec "$0" --stdio',
+            vim.fn.exepath 'pyright-langserver' ~= '' and vim.fn.exepath 'pyright-langserver' or 'pyright-langserver',
+          } or nil,
           settings = {
             python = {
               analysis = {
